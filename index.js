@@ -16,7 +16,9 @@ mongoose.connect('mongodb+srv://prince12:prince12@cluster0.v6tq54w.mongodb.net/p
 .catch(err => console.log(err));
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: '*'  // Allow all origins
+}));
 app.use(bodyParser.json());
 
 // Schema
@@ -41,6 +43,9 @@ userSchema.pre('save', async function(next) {
 const User = mongoose.model('User', userSchema);
 
 // Routes
+app.get('/', async (req,res)=>{
+    res.send("backend server running on aws")
+})
 app.post('/signup', async (req, res) => {
     try {
         const newUser = new User(req.body);
